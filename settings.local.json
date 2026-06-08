@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(SKILL_DIR=\"C:/Users/Usuario/AppData/Roaming/Claude/local-agent-mode-sessions/skills-plugin/ea1529f9-024b-4c6b-81b0-3fa49ea0a7b5/14008aa1-ad3b-4b31-b7b1-14bdb1927a1c/skills/adrian-saenz-hostinger-premium-website\" *)",
+      "Bash(python3 -m http.server 8765)",
+      "mcp__Claude_Preview__preview_start"
+    ]
+  }
+}
