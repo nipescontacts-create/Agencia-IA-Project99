@@ -1,0 +1,1685 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Project99 — Plataforma operativa central para agencias de IA" />
+  <meta name="theme-color" content="#E5302A" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="application-name" content="Project99" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Project99 — Agencia IA</title>
+
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="styles.css?v=20260608" />
+  <link rel="stylesheet" href="styles-extra.css?v=20260608" />
+
+  <noscript>
+    <style>body{display:grid;place-items:center;height:100vh;font-family:sans-serif;background:#0A0A14;color:#E2E8F0;text-align:center;padding:2rem}</style>
+    <p>Project99 requiere JavaScript para funcionar correctamente.</p>
+  </noscript>
+</head>
+<body>
+
+<!-- ======================================================
+     AUTH SCREEN
+====================================================== -->
+<div id="auth-screen" class="auth-screen">
+  <div class="auth-bg">
+    <div class="auth-mesh"></div>
+    <div class="auth-grid"></div>
+  </div>
+
+  <div class="auth-container">
+    <div class="auth-logo">
+      <div class="auth-logo-icon">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+          <path d="M16 2L28 9V23L16 30L4 23V9L16 2Z" fill="url(#lg1)"/>
+          <path d="M16 8L22 12V20L16 24L10 20V12L16 8Z" fill="rgba(255,255,255,0.15)"/>
+          <circle cx="16" cy="16" r="3" fill="white"/>
+          <defs>
+            <linearGradient id="lg1" x1="4" y1="2" x2="28" y2="30" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#E5302A"/>
+              <stop offset="1" stop-color="#AA1818"/>
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+      <span class="auth-logo-name">Project99</span>
+    </div>
+
+    <div class="auth-card">
+      <div class="auth-tabs">
+        <button class="auth-tab active" data-auth-tab="login">Iniciar sesión</button>
+        <button class="auth-tab" data-auth-tab="register">Crear cuenta</button>
+      </div>
+
+      <!-- Login -->
+      <form id="login-form" class="auth-form" data-auth-panel="login">
+        <div class="auth-welcome">
+          <h1>Bienvenido de nuevo</h1>
+          <p>Accede a tu plataforma operativa</p>
+        </div>
+
+        <button type="button" class="btn-social" id="google-login">
+          <svg width="18" height="18" viewBox="0 0 18 18"><path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.875 2.684-6.615z" fill="#4285F4"/><path d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 009 18z" fill="#34A853"/><path d="M3.964 10.71A5.41 5.41 0 013.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 000 9c0 1.452.348 2.827.957 4.042l3.007-2.332z" fill="#FBBC05"/><path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 00.957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58z" fill="#EA4335"/></svg>
+          Continuar con Google
+        </button>
+
+        <div class="auth-divider"><span>o con email</span></div>
+
+        <div class="form-group">
+          <label for="login-email">Email</label>
+          <input type="email" id="login-email" placeholder="tu@email.com" autocomplete="email" required />
+        </div>
+        <div class="form-group">
+          <label for="login-password">
+            Contraseña
+            <a href="#" class="form-link" style="float:right;font-size:.75rem">Olvidé mi contraseña</a>
+          </label>
+          <input type="password" id="login-password" placeholder="••••••••" autocomplete="current-password" required />
+        </div>
+
+        <button type="submit" class="btn-primary btn-full">Entrar</button>
+
+        <p class="auth-note">Demo: escribe cualquier email/contraseña para acceder</p>
+      </form>
+
+      <!-- Register -->
+      <form id="register-form" class="auth-form hidden" data-auth-panel="register">
+        <div class="auth-welcome">
+          <h1>Crea tu cuenta</h1>
+          <p>Empieza a operar en minutos</p>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="reg-name">Nombre completo</label>
+            <input type="text" id="reg-name" placeholder="Alex García" required />
+          </div>
+          <div class="form-group">
+            <label for="reg-agency">Nombre agencia</label>
+            <input type="text" id="reg-agency" placeholder="Mi Agencia IA" required />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="reg-email">Email</label>
+          <input type="email" id="reg-email" placeholder="tu@email.com" required />
+        </div>
+        <div class="form-group">
+          <label for="reg-password">Contraseña</label>
+          <input type="password" id="reg-password" placeholder="Mínimo 8 caracteres" required />
+        </div>
+        <div class="form-group">
+          <label for="reg-role">Tu rol</label>
+          <select id="reg-role">
+            <option value="admin">Dueño / Admin</option>
+            <option value="gestor">Gestor de proyectos</option>
+            <option value="vendedor">Vendedor</option>
+            <option value="developer">Developer</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn-primary btn-full">Crear cuenta gratis</button>
+      </form>
+    </div>
+
+    <p class="auth-footer">Project99 Agencia IA &copy; 2024 — Todos los derechos reservados</p>
+  </div>
+</div>
+
+<!-- ======================================================
+     APP SHELL
+====================================================== -->
+<div id="app-shell" class="app-shell hidden">
+
+  <!-- SIDEBAR -->
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">
+        <div class="sidebar-logo-icon">
+          <svg width="22" height="22" viewBox="0 0 32 32" fill="none">
+            <path d="M16 2L28 9V23L16 30L4 23V9L16 2Z" fill="url(#lg2)"/>
+            <circle cx="16" cy="16" r="3" fill="white"/>
+            <defs><linearGradient id="lg2" x1="4" y1="2" x2="28" y2="30" gradientUnits="userSpaceOnUse"><stop stop-color="#E5302A"/><stop offset="1" stop-color="#AA1818"/></linearGradient></defs>
+          </svg>
+        </div>
+        <span class="sidebar-logo-text">Project99</span>
+      </div>
+      <button id="sidebar-toggle" class="sidebar-collapse-btn" aria-label="Colapsar menú">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+    </div>
+
+    <nav class="sidebar-nav" role="navigation">
+      <div class="nav-section">
+        <button class="nav-item active" data-view="dashboard">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>
+          <span class="nav-label">Dashboard</span>
+        </button>
+        <button class="nav-item" data-view="leads">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          <span class="nav-label">Lead Hunting</span>
+          <span class="nav-badge">24</span>
+        </button>
+        <button class="nav-item" data-view="crm">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <span class="nav-label">CRM</span>
+        </button>
+        <button class="nav-item" data-view="projects">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg>
+          <span class="nav-label">Proyectos</span>
+          <span class="nav-badge">5</span>
+        </button>
+        <button class="nav-item" data-view="tasks">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="14" x2="8.01" y2="14"/><line x1="12" y1="14" x2="12.01" y2="14"/><line x1="16" y1="14" x2="16.01" y2="14"/></svg>
+          <span class="nav-label">Tareas</span>
+          <span class="nav-badge" id="tasks-nav-badge">0</span>
+        </button>
+      </div>
+
+      <div class="nav-section">
+        <p class="nav-section-label">Finanzas</p>
+        <button class="nav-item" data-view="quotes">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          <span class="nav-label">Presupuestos</span>
+        </button>
+        <button class="nav-item" data-view="analytics">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          <span class="nav-label">Analytics P&amp;L</span>
+        </button>
+      </div>
+
+      <div class="nav-section">
+        <p class="nav-section-label">Crecimiento</p>
+        <button class="nav-item" data-view="academy">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+          <span class="nav-label">Academy</span>
+        </button>
+        <button class="nav-item" data-view="portfolio">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-5-5L5 21"/></svg>
+          <span class="nav-label">Portfolio</span>
+        </button>
+        <button class="nav-item" data-view="resources">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          <span class="nav-label">Recursos</span>
+        </button>
+      </div>
+
+      <div class="nav-section">
+        <p class="nav-section-label">Sistema</p>
+        <button class="nav-item" data-view="integrations">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+          <span class="nav-label">Integraciones</span>
+        </button>
+        <button class="nav-item" data-view="team">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <span class="nav-label">Equipo</span>
+        </button>
+        <button class="nav-item" data-view="settings">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+          <span class="nav-label">Configuración</span>
+        </button>
+      </div>
+    </nav>
+
+    <div class="sidebar-user">
+      <div class="sidebar-user-avatar" id="sidebar-avatar">AD</div>
+      <div class="sidebar-user-info">
+        <span class="sidebar-user-name" id="sidebar-username">Ana Díaz</span>
+        <span class="sidebar-user-role">Admin</span>
+      </div>
+      <button class="sidebar-user-menu" id="logout-btn" title="Cerrar sesión">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      </button>
+    </div>
+  </aside>
+
+  <!-- MAIN AREA -->
+  <div class="main-area">
+
+    <!-- TOPBAR -->
+    <header class="topbar">
+      <button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Abrir menú">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+
+      <div class="topbar-search">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input type="search" id="global-search" placeholder="Buscar clientes, proyectos, tareas... (Ctrl+K)" />
+        <kbd>Ctrl+K</kbd>
+      </div>
+
+      <div class="topbar-actions">
+        <button class="topbar-btn" id="theme-toggle" title="Cambiar tema" aria-label="Cambiar tema claro/oscuro">
+          <svg class="icon-sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          <svg class="icon-moon hidden" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+        <button class="topbar-btn notif-btn" id="notif-btn" title="Notificaciones">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+          <span class="notif-dot"></span>
+        </button>
+        <button class="topbar-btn ai-btn" id="ai-toggle" title="Asistente IA">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20z"/><path d="M12 8v4l3 3"/></svg>
+          IA
+        </button>
+        <div class="topbar-user" id="topbar-user">
+          <div class="topbar-avatar" id="topbar-avatar">AD</div>
+        </div>
+      </div>
+    </header>
+
+    <!-- CONTENT VIEWS -->
+    <main class="content-area" id="content-area">
+
+      <!-- ===== 1. DASHBOARD ===== -->
+      <section class="view" data-view="dashboard" id="view-dashboard">
+        <div class="view-header">
+          <div>
+            <h2 id="dashboard-greeting">Buenos dias</h2>
+            <p class="view-subtitle">Aqui tienes el resumen de hoy</p>
+          </div>
+          <div class="view-actions">
+            <button class="btn-ghost" data-view-trigger="quotes">+ Presupuesto</button>
+            <button class="btn-primary" data-view-trigger="leads">+ Nuevo lead</button>
+          </div>
+        </div>
+
+        <!-- KPI Widgets — populated by JS -->
+        <div class="kpi-grid" id="kpi-grid"></div>
+
+        <!-- Charts Row -->
+        <div class="charts-grid">
+          <div class="chart-card chart-card--large">
+            <div class="chart-header">
+              <h3>Ingresos ultimos 12 meses</h3>
+              <div class="chart-legend">
+                <span class="legend-dot" style="background:#7C3AED"></span>Ingresos
+                <span class="legend-dot" style="background:#EF4444"></span>Gastos
+                <span class="legend-dot" style="background:#10B981"></span>Ganancia
+              </div>
+            </div>
+            <div class="chart-wrap" id="chart-revenue"></div>
+          </div>
+
+          <div class="chart-card">
+            <div class="chart-header"><h3>Pipeline de ventas</h3></div>
+            <div class="chart-wrap" id="chart-pipeline"></div>
+          </div>
+        </div>
+
+        <div class="charts-grid charts-grid--3">
+          <div class="chart-card">
+            <div class="chart-header"><h3>Top servicios</h3></div>
+            <div class="chart-wrap" id="chart-services"></div>
+          </div>
+          <div class="chart-card">
+            <div class="chart-header"><h3>Distribucion gastos</h3></div>
+            <div class="chart-wrap" id="chart-expenses"></div>
+          </div>
+          <div class="card">
+            <div class="chart-header"><h3>Tareas pendientes hoy</h3></div>
+            <ul class="task-list" id="today-tasks"></ul>
+            <button class="btn-ghost btn-sm" style="margin-top:.75rem" onclick="window.p99Nav('tasks')">Ver todas las tareas</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== 2. LEAD HUNTING ===== -->
+      <section class="view hidden" data-view="leads" id="view-leads">
+        <div class="view-header">
+          <div>
+            <h2>Lead Hunting</h2>
+            <p class="view-subtitle">Encuentra y prospecta nuevos clientes potenciales</p>
+          </div>
+          <div class="view-actions">
+            <button class="btn-ghost" id="export-leads-btn">Exportar CSV</button>
+            <button class="btn-primary" id="search-leads-btn">Buscar leads</button>
+          </div>
+        </div>
+
+        <div class="leads-layout">
+          <!-- Search form -->
+          <div class="card leads-search-card">
+            <h3 class="card-title">Filtros de busqueda</h3>
+            <div class="form-group">
+              <label>Tipo de negocio</label>
+              <select id="lead-industry">
+                <option value="">Todos los sectores</option>
+                <option>Tiendas online</option>
+                <option>Restaurantes</option>
+                <option>Abogados</option>
+                <option>Medicos / Clinicas</option>
+                <option>Consultoria</option>
+                <option>SaaS / Tech</option>
+                <option>Agencias</option>
+                <option>Educacion</option>
+                <option>E-commerce</option>
+                <option>Servicios profesionales</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Ciudad / Region</label>
+              <input type="text" id="lead-city" placeholder="Madrid, Barcelona, Valencia..." />
+            </div>
+            <div class="form-group">
+              <label>Rango de empleados</label>
+              <select id="lead-size">
+                <option value="">Cualquier tamano</option>
+                <option>1-10 empleados</option>
+                <option>10-50 empleados</option>
+                <option>50-200 empleados</option>
+                <option>200+ empleados</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Presupuesto estimado</label>
+              <select id="lead-budget">
+                <option value="">Cualquier presupuesto</option>
+                <option>1.000 - 5.000 EUR</option>
+                <option>5.000 - 15.000 EUR</option>
+                <option>15.000 - 30.000 EUR</option>
+                <option>30.000+ EUR</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Servicios requeridos</label>
+              <div class="checkbox-grid">
+                <label class="check-item"><input type="checkbox" value="web"> Web</label>
+                <label class="check-item"><input type="checkbox" value="app"> App</label>
+                <label class="check-item"><input type="checkbox" value="ia" checked> IA</label>
+                <label class="check-item"><input type="checkbox" value="chatbot"> Chatbot</label>
+                <label class="check-item"><input type="checkbox" value="analytics"> Analytics</label>
+                <label class="check-item"><input type="checkbox" value="automation"> Automatizacion</label>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Nivel competencia online</label>
+              <select id="lead-competition">
+                <option>Bajo — gran oportunidad</option>
+                <option>Medio</option>
+                <option>Alto</option>
+                <option>Muy alto</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Urgencia del proyecto</label>
+              <div class="radio-row">
+                <label class="radio-item"><input type="radio" name="urgency" value="baja"> Baja</label>
+                <label class="radio-item"><input type="radio" name="urgency" value="media" checked> Media</label>
+                <label class="radio-item"><input type="radio" name="urgency" value="alta"> Alta</label>
+                <label class="radio-item"><input type="radio" name="urgency" value="inmediata"> Inmediata</label>
+              </div>
+            </div>
+            <button class="btn-primary btn-full" id="run-lead-search">Buscar leads ahora</button>
+          </div>
+
+          <!-- Results table -->
+          <div class="leads-results">
+            <div class="table-toolbar">
+              <span class="table-count" id="leads-count">8 leads encontrados</span>
+              <div class="table-toolbar-right">
+                <input type="search" placeholder="Filtrar resultados..." id="leads-filter" class="table-search" />
+              </div>
+            </div>
+            <div class="table-wrap">
+              <table class="data-table" id="leads-table">
+                <thead>
+                  <tr>
+                    <th>Empresa</th>
+                    <th>Sector</th>
+                    <th>Ciudad</th>
+                    <th>Contacto</th>
+                    <th>Score</th>
+                    <th>Presupuesto</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody id="leads-tbody">
+                  <!-- Populated by JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== 3. CRM ===== -->
+      <section class="view hidden" data-view="crm" id="view-crm">
+        <div class="view-header">
+          <div>
+            <h2>CRM</h2>
+            <p class="view-subtitle">Gestiona tus clientes y pipeline de ventas</p>
+          </div>
+          <div class="view-actions">
+            <div class="btn-group">
+              <button class="btn-ghost btn-sm crm-view-btn active" data-crm-view="kanban">Kanban</button>
+              <button class="btn-ghost btn-sm crm-view-btn" data-crm-view="list">Lista</button>
+            </div>
+            <button class="btn-primary" id="new-client-btn">+ Nuevo cliente</button>
+          </div>
+        </div>
+
+        <!-- Kanban -->
+        <div id="crm-kanban" class="kanban-board">
+          <!-- Columns populated by JS -->
+        </div>
+
+        <!-- List -->
+        <div id="crm-list" class="hidden">
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Cliente</th>
+                  <th>Contacto</th>
+                  <th>Etapa</th>
+                  <th>Presupuesto</th>
+                  <th>Ultima interaccion</th>
+                  <th>Score</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="crm-list-tbody"><!-- JS --></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== 4. PROJECTS ===== -->
+      <section class="view hidden" data-view="projects" id="view-projects">
+        <div class="view-header">
+          <div><h2>Proyectos y Tareas</h2><p class="view-subtitle">Seguimiento completo de todos tus proyectos</p></div>
+          <div class="view-actions">
+            <div class="btn-group">
+              <button class="btn-ghost btn-sm proj-view-btn active" data-proj-view="table">Tabla</button>
+              <button class="btn-ghost btn-sm proj-view-btn" data-proj-view="board">Board</button>
+              <button class="btn-ghost btn-sm proj-view-btn" data-proj-view="timeline">Timeline</button>
+            </div>
+            <button class="btn-primary" id="new-project-btn">+ Nuevo proyecto</button>
+          </div>
+        </div>
+
+        <!-- Table view -->
+        <div id="proj-table-view">
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Proyecto</th>
+                  <th>Cliente</th>
+                  <th>Estado</th>
+                  <th>Equipo</th>
+                  <th>Deadline</th>
+                  <th>Presupuesto</th>
+                  <th>Progreso</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="proj-tbody"><!-- JS --></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Board view -->
+        <div id="proj-board-view" class="hidden">
+          <div class="kanban-board" id="proj-kanban"><!-- JS --></div>
+        </div>
+
+        <!-- Timeline view -->
+        <div id="proj-timeline-view" class="hidden">
+          <div class="timeline-wrap" id="proj-timeline"><!-- JS --></div>
+        </div>
+      </section>
+
+      <!-- ===== 4b. TAREAS ===== -->
+      <section class="view hidden" data-view="tasks" id="view-tasks">
+        <div class="view-header">
+          <div>
+            <h2>Tareas y Calendario</h2>
+            <p class="view-subtitle">Organiza deadlines, tareas del dia a dia y proyectos</p>
+          </div>
+          <div class="view-actions">
+            <div class="btn-group">
+              <button class="btn-ghost btn-sm task-view-btn active" data-tview="list">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+                Lista
+              </button>
+              <button class="btn-ghost btn-sm task-view-btn" data-tview="calendar">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                Calendario
+              </button>
+              <button class="btn-ghost btn-sm task-view-btn" data-tview="board">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="5" height="18" rx="1"/><rect x="10" y="3" width="5" height="12" rx="1"/><rect x="17" y="3" width="5" height="16" rx="1"/></svg>
+                Board
+              </button>
+            </div>
+            <button class="btn-primary" id="new-task-btn">+ Nueva tarea</button>
+          </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="task-stats-row" id="task-stats-row"></div>
+
+        <!-- LIST VIEW -->
+        <div id="task-list-view">
+          <div class="task-filter-bar">
+            <div class="task-filter-tabs" id="task-filter-tabs">
+              <button class="task-filter-tab active" data-filter="all">Todas</button>
+              <button class="task-filter-tab" data-filter="today">Hoy</button>
+              <button class="task-filter-tab" data-filter="week">Esta semana</button>
+              <button class="task-filter-tab" data-filter="overdue">Vencidas</button>
+              <button class="task-filter-tab" data-filter="done">Completadas</button>
+            </div>
+            <div style="display:flex;gap:.4rem;align-items:center;flex-wrap:wrap">
+              <select id="task-priority-filter" class="select-sm">
+                <option value="">Todas las prioridades</option>
+                <option value="alta">Alta</option>
+                <option value="media">Media</option>
+                <option value="baja">Baja</option>
+              </select>
+              <input type="search" id="task-search" placeholder="Buscar tarea..." class="table-search" />
+            </div>
+          </div>
+          <div id="task-list-body"></div>
+        </div>
+
+        <!-- CALENDAR VIEW -->
+        <div id="task-calendar-view" class="hidden">
+          <div class="task-cal-layout">
+            <div class="task-cal-main-col">
+              <div class="task-cal-nav">
+                <button class="btn-ghost btn-sm" id="cal-prev">&#8249;</button>
+                <h3 id="cal-month-label"></h3>
+                <button class="btn-ghost btn-sm" id="cal-next">&#8250;</button>
+                <button class="btn-ghost btn-sm" id="cal-today" style="margin-left:.5rem;font-size:.72rem">Hoy</button>
+              </div>
+              <div class="task-cal-weekdays">
+                <span>Lun</span><span>Mar</span><span>Mie</span><span>Jue</span><span>Vie</span>
+                <span style="color:var(--text-dim)">Sab</span><span style="color:var(--text-dim)">Dom</span>
+              </div>
+              <div class="task-cal-grid" id="task-cal-grid"></div>
+            </div>
+            <div class="task-cal-sidebar">
+              <div id="task-cal-day-header" class="task-cal-day-title">Selecciona un dia</div>
+              <div id="task-cal-day-tasks"></div>
+              <button class="btn-ghost btn-sm" id="cal-add-task-btn" style="width:100%;margin-top:.75rem;justify-content:center">+ Tarea para este dia</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- BOARD VIEW -->
+        <div id="task-board-view" class="hidden">
+          <div class="kanban-board task-board-kanban" id="task-board-kanban"></div>
+        </div>
+      </section>
+
+      <!-- ===== 5. PRESUPUESTOS ===== -->
+      <section class="view hidden" data-view="quotes" id="view-quotes">
+        <div class="view-header">
+          <div><h2>Presupuestos y Facturas</h2><p class="view-subtitle">Crea y gestiona documentos financieros profesionales</p></div>
+          <div class="view-actions">
+            <button class="btn-ghost" id="invoices-btn">Ver facturas</button>
+            <button class="btn-primary" id="new-quote-btn">+ Nuevo presupuesto</button>
+          </div>
+        </div>
+
+        <div class="quotes-tabs">
+          <button class="tab-btn active" data-tab="quotes">Presupuestos</button>
+          <button class="tab-btn" data-tab="invoices">Facturas</button>
+        </div>
+
+        <div id="quotes-panel">
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Numero</th>
+                  <th>Cliente</th>
+                  <th>Servicios</th>
+                  <th>Total</th>
+                  <th>Estado</th>
+                  <th>Fecha</th>
+                  <th>Valido hasta</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="quotes-tbody"><!-- JS --></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div id="invoices-panel" class="hidden">
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Numero</th>
+                  <th>Cliente</th>
+                  <th>Total</th>
+                  <th>Estado</th>
+                  <th>Fecha</th>
+                  <th>Vencimiento</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="invoices-tbody"><!-- JS --></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== 6. ACADEMY ===== -->
+      <section class="view hidden" data-view="academy" id="view-academy">
+        <div class="view-header">
+          <div><h2>Academy</h2><p class="view-subtitle">Aprende a ofrecer nuevos servicios con IA y escala tu agencia</p></div>
+        </div>
+
+        <div class="academy-stats">
+          <div class="stat-chip"><span class="stat-chip-num">8</span> cursos disponibles</div>
+          <div class="stat-chip"><span class="stat-chip-num">0</span> completados</div>
+          <div class="stat-chip"><span class="stat-chip-num">0h</span> aprendidas</div>
+          <div class="stat-chip"><span class="stat-chip-num">0</span> certificados</div>
+        </div>
+
+        <div class="academy-grid" id="academy-grid"><!-- JS --></div>
+      </section>
+
+      <!-- ===== 7. PORTFOLIO ===== -->
+      <section class="view hidden" data-view="portfolio" id="view-portfolio">
+        <div class="view-header">
+          <div><h2>Portfolio</h2><p class="view-subtitle">Muestra tus mejores trabajos y casos de exito</p></div>
+          <div class="view-actions">
+            <button class="btn-primary" id="new-case-study-btn">+ Nuevo case study</button>
+          </div>
+        </div>
+        <div class="portfolio-grid" id="portfolio-grid"><!-- JS --></div>
+      </section>
+
+      <!-- ===== 8. RECURSOS ===== -->
+      <section class="view hidden" data-view="resources" id="view-resources">
+        <div class="view-header">
+          <div><h2>Recursos y Templates</h2><p class="view-subtitle">Prompts, componentes, documentos legales y mas</p></div>
+        </div>
+
+        <div class="resources-tabs">
+          <button class="tab-btn active" data-rtab="prompts">Prompts IA</button>
+          <button class="tab-btn" data-rtab="components">Componentes</button>
+          <button class="tab-btn" data-rtab="legal">Documentos legales</button>
+          <button class="tab-btn" data-rtab="emails">Emails</button>
+          <button class="tab-btn" data-rtab="pricing">Precios</button>
+        </div>
+
+        <div id="res-prompts" class="res-panel">
+          <div class="prompts-grid" id="prompts-grid"><!-- JS --></div>
+        </div>
+        <div id="res-components" class="res-panel hidden">
+          <div class="resources-list" id="components-list">
+            <div class="resource-item"><div class="resource-icon">{ }</div><div><strong>React Chat Widget</strong><p>Componente listo para integrar chatbot en cualquier web</p></div><button class="btn-ghost btn-sm">Copiar</button></div>
+            <div class="resource-item"><div class="resource-icon">&lt;/&gt;</div><div><strong>API Claude Integration</strong><p>Ejemplo completo de integracion con la API de Claude</p></div><button class="btn-ghost btn-sm">Copiar</button></div>
+            <div class="resource-item"><div class="resource-icon">CSS</div><div><strong>Dashboard Layout</strong><p>Layout CSS Grid para dashboards responsivos</p></div><button class="btn-ghost btn-sm">Copiar</button></div>
+            <div class="resource-item"><div class="resource-icon">JS</div><div><strong>Lead Scraper Helper</strong><p>Script para automatizar extraccion de datos de Google Maps</p></div><button class="btn-ghost btn-sm">Copiar</button></div>
+          </div>
+        </div>
+        <div id="res-legal" class="res-panel hidden">
+          <div class="resources-list">
+            <div class="resource-item"><div class="resource-icon">PDF</div><div><strong>Contrato Cliente Estandar</strong><p>Contrato marco para proyectos de desarrollo y consultoria IA</p></div><button class="btn-ghost btn-sm">Descargar</button></div>
+            <div class="resource-item"><div class="resource-icon">PDF</div><div><strong>NDA — Acuerdo de Confidencialidad</strong><p>Protege tu IP y la informacion de tus clientes</p></div><button class="btn-ghost btn-sm">Descargar</button></div>
+            <div class="resource-item"><div class="resource-icon">PDF</div><div><strong>Terminos y Condiciones</strong><p>T&amp;C adaptados para agencias de servicios digitales</p></div><button class="btn-ghost btn-sm">Descargar</button></div>
+            <div class="resource-item"><div class="resource-icon">PDF</div><div><strong>Politica de Privacidad</strong><p>Template RGPD-compliant para tu agencia y clientes</p></div><button class="btn-ghost btn-sm">Descargar</button></div>
+          </div>
+        </div>
+        <div id="res-emails" class="res-panel hidden">
+          <div class="resources-list" id="emails-list"><!-- JS --></div>
+        </div>
+        <div id="res-pricing" class="res-panel hidden">
+          <div class="pricing-table-wrap">
+            <table class="data-table">
+              <thead><tr><th>Servicio</th><th>Precio base</th><th>Precio premium</th><th>Margen sugerido</th><th>Modalidad</th></tr></thead>
+              <tbody id="pricing-tbody"><!-- JS --></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== 9. INTEGRACIONES ===== -->
+      <section class="view hidden" data-view="integrations" id="view-integrations">
+        <div class="view-header">
+          <div><h2>Integraciones</h2><p class="view-subtitle">Conecta modelos de IA y herramientas externas a la plataforma</p></div>
+        </div>
+
+        <!-- ── Bloque modelos IA ── -->
+        <div class="mt-0">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem">
+            <div>
+              <h3 style="font-size:1rem;font-weight:800;letter-spacing:-.02em">Modelos de IA</h3>
+              <p style="font-size:.775rem;color:var(--text-mute);margin-top:.15rem">Configura tus API keys para usar cada proveedor en el asistente y automatizaciones</p>
+            </div>
+          </div>
+          <div id="ai-models-section"><!-- JS renderiza las cards --></div>
+        </div>
+
+        <!-- ── Bloque herramientas ── -->
+        <div class="mt-6">
+          <div style="margin-bottom:1rem">
+            <h3 style="font-size:1rem;font-weight:800;letter-spacing:-.02em">Herramientas y servicios</h3>
+            <p style="font-size:.775rem;color:var(--text-mute);margin-top:.15rem">Conecta tus herramientas de trabajo</p>
+          </div>
+          <div class="integrations-grid" id="integrations-grid"><!-- JS --></div>
+        </div>
+
+        <div class="mt-6">
+          <h3 class="section-title">Workflows automaticos</h3>
+          <div class="workflows-list">
+            <div class="workflow-card">
+              <div class="workflow-status workflow-status--active"></div>
+              <div class="workflow-info">
+                <strong>Lead nuevo → CRM → Email automatico → Tarea</strong>
+                <p>Cuando llega un lead, se crea en CRM, se envia email de bienvenida y se crea tarea de seguimiento</p>
+              </div>
+              <div class="workflow-meta">
+                <span class="badge badge--neutral">Inactivo</span>
+                <span class="text-mute">0 ejecuciones</span>
+              </div>
+              <button class="btn-ghost btn-sm">Activar</button>
+            </div>
+            <div class="workflow-card">
+              <div class="workflow-status workflow-status--inactive"></div>
+              <div class="workflow-info">
+                <strong>Presupuesto aceptado → Proyecto → Equipo → Notificacion</strong>
+                <p>Al aceptarse un presupuesto, se crea el proyecto, se asigna al equipo y se notifica por Slack</p>
+              </div>
+              <div class="workflow-meta">
+                <span class="badge badge--neutral">Inactivo</span>
+                <span class="text-mute">0 ejecuciones</span>
+              </div>
+              <button class="btn-ghost btn-sm">Configurar</button>
+            </div>
+            <div class="workflow-card">
+              <div class="workflow-status workflow-status--inactive"></div>
+              <div class="workflow-info">
+                <strong>Factura vencida → Email recordatorio → SMS → Alerta</strong>
+                <p>Sistema de recordatorios automaticos para facturas sin pagar</p>
+              </div>
+              <div class="workflow-meta">
+                <span class="badge badge--warning">Inactivo</span>
+                <span class="text-mute">0 ejecuciones</span>
+              </div>
+              <button class="btn-ghost btn-sm">Activar</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== 10. ANALYTICS P&L ===== -->
+      <section class="view hidden" data-view="analytics" id="view-analytics">
+        <div class="view-header">
+          <div><h2>Analytics y P&amp;L</h2><p class="view-subtitle">Ganancias, perdidas y proyecciones financieras en tiempo real</p></div>
+          <div class="view-actions">
+            <select id="analytics-period" class="select-sm">
+              <option value="12">Ultimos 12 meses</option>
+              <option value="6">Ultimos 6 meses</option>
+              <option value="3">Ultimos 3 meses</option>
+              <option value="ytd">Este año</option>
+            </select>
+            <button class="btn-ghost" id="export-pl-btn">Exportar P&amp;L</button>
+          </div>
+        </div>
+
+        <!-- P&L Summary -->
+        <div class="pl-summary-grid">
+          <div class="pl-card pl-card--income">
+            <div class="pl-card-label">Ingresos totales</div>
+            <div class="pl-card-value" id="pl-income">+ 38.200 EUR</div>
+            <div class="pl-card-change pl-card-change--up">+12.4% vs periodo anterior</div>
+          </div>
+          <div class="pl-card pl-card--expenses">
+            <div class="pl-card-label">Gastos totales</div>
+            <div class="pl-card-value" id="pl-expenses">- 16.500 EUR</div>
+            <div class="pl-card-change pl-card-change--neutral">+3.1% vs periodo anterior</div>
+          </div>
+          <div class="pl-card pl-card--net">
+            <div class="pl-card-label">Ganancia neta</div>
+            <div class="pl-card-value" id="pl-net">21.700 EUR</div>
+            <div class="pl-card-change pl-card-change--up">+19.8% vs periodo anterior</div>
+          </div>
+          <div class="pl-card pl-card--margin">
+            <div class="pl-card-label">Margen neto</div>
+            <div class="pl-card-value" id="pl-margin">56.8%</div>
+            <div class="pl-card-change pl-card-change--up">Meta: 50% — superado</div>
+          </div>
+        </div>
+
+        <!-- Main P&L Chart -->
+        <div class="card mt-4">
+          <div class="chart-header">
+            <h3>Tendencia mensual (Ingresos / Gastos / Ganancia)</h3>
+            <div class="chart-legend">
+              <span class="legend-dot" style="background:#22C55E"></span>Ingresos
+              <span class="legend-dot" style="background:#EF4444"></span>Gastos
+              <span class="legend-dot" style="background:#888"></span>Ganancia neta
+            </div>
+            <button class="btn-primary btn-sm" id="register-pl-btn">+ Registrar entrada</button>
+          </div>
+          <div class="chart-wrap chart-wrap--tall" id="chart-pl-main"></div>
+        </div>
+
+        <!-- Detailed breakdown -->
+        <div class="charts-grid mt-4">
+          <div class="card">
+            <div class="chart-header"><h3>Desglose de ingresos</h3></div>
+            <div class="breakdown-list" id="income-breakdown">
+              <div class="breakdown-row"><span>Proyectos finalizados</span><div class="breakdown-bar" style="--w:65%"></div><span>24.830 EUR (65%)</span></div>
+              <div class="breakdown-row"><span>Servicios recurrentes</span><div class="breakdown-bar" style="--w:22%"></div><span>8.404 EUR (22%)</span></div>
+              <div class="breakdown-row"><span>Consultoria</span><div class="breakdown-bar" style="--w:9%"></div><span>3.438 EUR (9%)</span></div>
+              <div class="breakdown-row"><span>Otros</span><div class="breakdown-bar" style="--w:4%"></div><span>1.528 EUR (4%)</span></div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="chart-header"><h3>Desglose de gastos</h3></div>
+            <div id="pl-expenses-chart" class="chart-wrap"></div>
+          </div>
+        </div>
+
+        <!-- Monthly table -->
+        <div class="card mt-4">
+          <div class="chart-header">
+            <h3>Detalle mensual</h3>
+            <button class="btn-ghost btn-sm" id="toggle-compare">Comparar con año anterior</button>
+          </div>
+          <div class="table-wrap">
+            <table class="data-table" id="pl-table">
+              <thead>
+                <tr><th>Mes</th><th>Ingresos</th><th>Gastos</th><th>Ganancia</th><th>Margen</th></tr>
+              </thead>
+              <tbody id="pl-tbody"><!-- JS --></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- KPI chips -->
+        <div class="kpi-chips mt-4">
+          <div class="kpi-chip"><span class="kpi-chip-label">Margen bruto</span><span class="kpi-chip-val" style="color:#10B981">62.4%</span></div>
+          <div class="kpi-chip"><span class="kpi-chip-label">ROI promedio</span><span class="kpi-chip-val" style="color:#7C3AED">3.4x</span></div>
+          <div class="kpi-chip"><span class="kpi-chip-label">Burn rate</span><span class="kpi-chip-val" style="color:#F59E0B">550 EUR/dia</span></div>
+          <div class="kpi-chip"><span class="kpi-chip-label">Break-even</span><span class="kpi-chip-val" style="color:#06B6D4">16.500 EUR</span></div>
+          <div class="kpi-chip"><span class="kpi-chip-label">Proyeccion anual</span><span class="kpi-chip-val" style="color:#10B981">458.400 EUR</span></div>
+        </div>
+
+        <!-- Alert -->
+        <div class="alert alert--info mt-4">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          Proyeccion basada en el promedio de los ultimos 6 meses. El margen actual supera la meta del 50% establecida en configuracion.
+        </div>
+      </section>
+
+      <!-- ===== 11. EQUIPO ===== -->
+      <section class="view hidden" data-view="team" id="view-team">
+        <div class="view-header">
+          <div><h2>Equipo</h2><p class="view-subtitle">Gestiona tu equipo, roles y asignaciones</p></div>
+          <div class="view-actions">
+            <button class="btn-primary" id="invite-member-btn">+ Invitar miembro</button>
+          </div>
+        </div>
+        <div class="team-grid" id="team-grid"><!-- JS --></div>
+      </section>
+
+      <!-- ===== 12. CONFIGURACION ===== -->
+      <section class="view hidden" data-view="settings" id="view-settings">
+        <div class="view-header">
+          <div><h2>Configuracion</h2><p class="view-subtitle">Personaliza tu espacio de trabajo</p></div>
+        </div>
+
+        <div class="settings-layout">
+          <div class="settings-nav">
+            <button class="settings-nav-item active" data-stab="profile">Perfil</button>
+            <button class="settings-nav-item" data-stab="agency">Agencia</button>
+            <button class="settings-nav-item" data-stab="appearance">Apariencia</button>
+            <button class="settings-nav-item" data-stab="security">Seguridad</button>
+            <button class="settings-nav-item" data-stab="notifications">Notificaciones</button>
+            <button class="settings-nav-item" data-stab="apikeys">API Keys</button>
+            <button class="settings-nav-item" data-stab="billing">Plan y facturacion</button>
+          </div>
+
+          <div class="settings-content">
+            <!-- Profile -->
+            <div class="settings-panel active" data-spanel="profile">
+              <h3 class="settings-section-title">Tu perfil</h3>
+              <p class="settings-section-desc">Esta informacion se usa para personalizar tu experiencia en toda la plataforma</p>
+              <div class="settings-form">
+                <div class="form-row">
+                  <div class="form-group">
+                    <label>Nombre completo</label>
+                    <input type="text" id="settings-name" value="" />
+                  </div>
+                  <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="settings-email" value="" />
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label>Telefono</label>
+                    <input type="tel" id="settings-phone" value="" />
+                  </div>
+                  <div class="form-group">
+                    <label>Rol</label>
+                    <select id="settings-role">
+                      <option selected>Admin</option>
+                      <option>Gestor</option>
+                      <option>Developer</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label>Bio profesional</label>
+                  <textarea rows="3" placeholder="Describe tu experiencia...">Founder de Project99 Agencia IA. Especialista en automatizacion de procesos y desarrollo de productos con inteligencia artificial.</textarea>
+                </div>
+                <button class="btn-primary" id="save-profile-btn">Guardar cambios</button>
+              </div>
+            </div>
+
+            <!-- Agency -->
+            <div class="settings-panel hidden" data-spanel="agency">
+              <h3 class="settings-section-title">Datos de la agencia</h3>
+              <div class="settings-form">
+                <div class="form-row">
+                  <div class="form-group">
+                    <label>Nombre de la agencia</label>
+                    <input type="text" id="settings-agency" placeholder="Nombre de tu agencia" />
+                  </div>
+                  <div class="form-group">
+                    <label>CIF / NIF</label>
+                    <input type="text" placeholder="B12345678" />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label>Direccion fiscal</label>
+                  <input type="text" placeholder="Calle Mayor 1, 28001 Madrid" />
+                </div>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label>Email de contacto</label>
+                    <input type="email" id="settings-agency-email" placeholder="hola@tuagencia.com" />
+                  </div>
+                  <div class="form-group">
+                    <label>Moneda predeterminada</label>
+                    <select><option selected>EUR — Euro</option><option>USD — Dolar</option><option>GBP — Libra</option></select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label>IBAN (para facturas)</label>
+                  <input type="text" placeholder="ES00 0000 0000 0000 0000 0000" />
+                </div>
+                <div class="form-group">
+                  <label>Meta de margen (%)</label>
+                  <input type="number" value="50" min="0" max="100" />
+                </div>
+                <button class="btn-primary">Guardar</button>
+              </div>
+            </div>
+
+            <!-- Appearance -->
+            <div class="settings-panel hidden" data-spanel="appearance">
+              <h3 class="settings-section-title">Apariencia</h3>
+              <div class="settings-form">
+                <div class="form-group">
+                  <label>Tema</label>
+                  <div class="theme-selector">
+                    <button class="theme-option theme-option--dark" id="theme-dark-btn">
+                      <div class="theme-preview theme-preview--dark">
+                        <div class="tp-sidebar"></div>
+                        <div class="tp-content"><div class="tp-card"></div><div class="tp-card"></div></div>
+                      </div>
+                      <span>Oscuro</span>
+                    </button>
+                    <button class="theme-option" id="theme-light-btn">
+                      <div class="theme-preview theme-preview--light">
+                        <div class="tp-sidebar"></div>
+                        <div class="tp-content"><div class="tp-card"></div><div class="tp-card"></div></div>
+                      </div>
+                      <span>Claro</span>
+                    </button>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label>Idioma</label>
+                  <select><option selected>Espanol</option><option>English</option><option>Portugues</option></select>
+                </div>
+                <div class="form-group">
+                  <label>Zona horaria</label>
+                  <select><option selected>Europe/Madrid (UTC+1)</option><option>America/New_York (UTC-5)</option><option>America/Bogota (UTC-5)</option></select>
+                </div>
+                <div class="toggle-row">
+                  <div><strong>Barra de progreso en topbar</strong><p class="text-mute">Muestra progreso de tareas activas</p></div>
+                  <label class="toggle"><input type="checkbox" checked /><span class="toggle-slider"></span></label>
+                </div>
+                <div class="toggle-row">
+                  <div><strong>Animaciones</strong><p class="text-mute">Transiciones y efectos visuales</p></div>
+                  <label class="toggle"><input type="checkbox" checked /><span class="toggle-slider"></span></label>
+                </div>
+                <button class="btn-primary">Guardar preferencias</button>
+              </div>
+            </div>
+
+            <!-- Security -->
+            <div class="settings-panel hidden" data-spanel="security">
+              <h3 class="settings-section-title">Seguridad</h3>
+              <div class="settings-form">
+                <div class="form-group">
+                  <label>Contrasena actual</label>
+                  <input type="password" placeholder="••••••••" />
+                </div>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label>Nueva contrasena</label>
+                    <input type="password" placeholder="Minimo 8 caracteres" />
+                  </div>
+                  <div class="form-group">
+                    <label>Confirmar contrasena</label>
+                    <input type="password" placeholder="Repetir contrasena" />
+                  </div>
+                </div>
+                <button class="btn-primary">Cambiar contrasena</button>
+
+                <div class="settings-divider"></div>
+
+                <div class="toggle-row">
+                  <div><strong>Autenticacion de dos factores (2FA)</strong><p class="text-mute">Requiere codigo adicional al iniciar sesion</p></div>
+                  <label class="toggle"><input type="checkbox" /><span class="toggle-slider"></span></label>
+                </div>
+
+                <div class="settings-divider"></div>
+                <h4>Sesiones activas</h4>
+                <div class="sessions-list">
+                  <div class="session-item"><div class="session-icon">&#x1F4BB;</div><div><strong>Chrome — Windows 10</strong><p class="text-mute">Madrid, Espana · Activa ahora</p></div><span class="badge badge--success">Actual</span></div>
+                  <div class="session-item"><div class="session-icon">&#x1F4F1;</div><div><strong>Safari — iPhone</strong><p class="text-mute">Madrid, Espana · Hace 2 horas</p></div><button class="btn-ghost btn-sm">Cerrar</button></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Notifications -->
+            <div class="settings-panel hidden" data-spanel="notifications">
+              <h3 class="settings-section-title">Notificaciones</h3>
+              <div class="settings-form">
+                <h4>Email</h4>
+                <div class="toggle-row"><div><strong>Nuevo lead asignado</strong></div><label class="toggle"><input type="checkbox" checked /><span class="toggle-slider"></span></label></div>
+                <div class="toggle-row"><div><strong>Presupuesto aceptado/rechazado</strong></div><label class="toggle"><input type="checkbox" checked /><span class="toggle-slider"></span></label></div>
+                <div class="toggle-row"><div><strong>Factura vencida</strong></div><label class="toggle"><input type="checkbox" checked /><span class="toggle-slider"></span></label></div>
+                <div class="toggle-row"><div><strong>Resumen semanal</strong></div><label class="toggle"><input type="checkbox" /><span class="toggle-slider"></span></label></div>
+                <div class="settings-divider"></div>
+                <h4>Push / In-app</h4>
+                <div class="toggle-row"><div><strong>Mensajes del equipo</strong></div><label class="toggle"><input type="checkbox" checked /><span class="toggle-slider"></span></label></div>
+                <div class="toggle-row"><div><strong>Tareas asignadas</strong></div><label class="toggle"><input type="checkbox" checked /><span class="toggle-slider"></span></label></div>
+                <div class="toggle-row"><div><strong>Recordatorios de seguimiento</strong></div><label class="toggle"><input type="checkbox" checked /><span class="toggle-slider"></span></label></div>
+                <button class="btn-primary">Guardar preferencias</button>
+              </div>
+            </div>
+
+            <!-- API Keys -->
+            <div class="settings-panel hidden" data-spanel="apikeys">
+              <h3 class="settings-section-title">API Keys</h3>
+              <p class="settings-section-desc">Configura las integraciones con servicios externos. Las claves se almacenan cifradas.</p>
+              <div class="settings-form">
+                <div class="apikey-row">
+                  <label>Claude API Key</label>
+                  <div class="apikey-input-wrap">
+                    <input type="password" id="claude-api-key" placeholder="sk-ant-..." />
+                    <button class="btn-ghost btn-sm" data-show-key="claude-api-key">Mostrar</button>
+                    <button class="btn-ghost btn-sm">Probar</button>
+                  </div>
+                </div>
+                <div class="apikey-row">
+                  <label>OpenAI API Key</label>
+                  <div class="apikey-input-wrap">
+                    <input type="password" placeholder="sk-..." />
+                    <button class="btn-ghost btn-sm">Mostrar</button>
+                    <button class="btn-ghost btn-sm">Probar</button>
+                  </div>
+                </div>
+                <div class="apikey-row">
+                  <label>Google Maps API Key</label>
+                  <div class="apikey-input-wrap">
+                    <input type="password" placeholder="AIza..." />
+                    <button class="btn-ghost btn-sm">Mostrar</button>
+                    <button class="btn-ghost btn-sm">Probar</button>
+                  </div>
+                </div>
+                <div class="apikey-row">
+                  <label>Stripe Secret Key</label>
+                  <div class="apikey-input-wrap">
+                    <input type="password" placeholder="sk_live_..." />
+                    <button class="btn-ghost btn-sm">Mostrar</button>
+                    <button class="btn-ghost btn-sm">Probar</button>
+                  </div>
+                </div>
+                <button class="btn-primary">Guardar API Keys</button>
+              </div>
+            </div>
+
+            <!-- Billing -->
+            <div class="settings-panel hidden" data-spanel="billing">
+              <h3 class="settings-section-title">Plan y facturacion</h3>
+              <div class="billing-current">
+                <div class="billing-plan">
+                  <div class="billing-plan-badge">Plan actual</div>
+                  <div class="billing-plan-name">
+                    <span class="gradient-text">Pro</span>
+                  </div>
+                  <p>Proximo cobro: 7 de Febrero 2024 — 49 EUR/mes</p>
+                  <div class="billing-features">
+                    <div class="billing-feature">Clientes ilimitados</div>
+                    <div class="billing-feature">5 miembros de equipo</div>
+                    <div class="billing-feature">Analytics completos</div>
+                    <div class="billing-feature">Integraciones IA</div>
+                    <div class="billing-feature">Soporte prioritario</div>
+                  </div>
+                </div>
+                <div class="billing-upgrade">
+                  <h4>Actualizar a Enterprise</h4>
+                  <p>Equipo ilimitado, white-label, SLA garantizado y cuenta manager dedicado</p>
+                  <button class="btn-primary">Ver planes Enterprise</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div><!-- /.main-area -->
+
+  <!-- AI CHAT PANEL -->
+  <div id="ai-panel" class="ai-panel hidden">
+    <div class="ai-panel-header">
+      <div class="ai-panel-title">
+        <div class="ai-indicator"></div>
+        <span>Asistente IA</span>
+      </div>
+      <button id="ai-panel-close">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="ai-messages" id="ai-messages">
+      <div class="ai-msg ai-msg--bot">
+        <div class="ai-msg-avatar">IA</div>
+        <div class="ai-msg-bubble">Hola, soy tu asistente de Project99. Puedo ayudarte a analizar clientes, generar emails, ideas de propuestas, o cualquier tarea de tu agencia. Cual seccion necesitas?</div>
+      </div>
+      <div class="ai-quick-actions">
+        <button class="ai-quick-btn" data-quick="analizar-cliente">Analizar cliente</button>
+        <button class="ai-quick-btn" data-quick="generar-email">Generar email</button>
+        <button class="ai-quick-btn" data-quick="ideas-propuesta">Ideas propuesta</button>
+        <button class="ai-quick-btn" data-quick="resumen-semana">Resumen semana</button>
+      </div>
+    </div>
+    <div class="ai-input-area">
+      <textarea id="ai-input" placeholder="Escribe tu consulta..." rows="2"></textarea>
+      <button id="ai-send" class="btn-primary">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+      </button>
+    </div>
+  </div>
+
+</div><!-- /#app-shell -->
+
+<!-- ======================================================
+     MODALS
+====================================================== -->
+
+<!-- New Quote Modal -->
+<div id="modal-quote" class="modal-overlay hidden">
+  <div class="modal modal--large">
+    <div class="modal-header">
+      <h3>Nuevo Presupuesto</h3>
+      <button class="modal-close" data-modal="modal-quote">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Empresa cliente</label>
+          <input type="text" id="q-company" placeholder="Nombre de la empresa" />
+        </div>
+        <div class="form-group">
+          <label>Persona de contacto</label>
+          <input type="text" id="q-contact" placeholder="Nombre completo" />
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" id="q-email" placeholder="email@empresa.com" />
+        </div>
+        <div class="form-group">
+          <label>Sector</label>
+          <select id="q-industry">
+            <option>SaaS / Tech</option>
+            <option>E-commerce</option>
+            <option>Salud</option>
+            <option>Legal</option>
+            <option>Educacion</option>
+            <option>Restauracion</option>
+            <option>Otro</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Descripcion del proyecto</label>
+        <textarea id="q-desc" rows="2" placeholder="Describe brevemente el proyecto..."></textarea>
+      </div>
+
+      <h4 class="mt-4 mb-2">Servicios</h4>
+      <div id="quote-services-list" class="quote-services-list">
+        <!-- Rows added by JS -->
+      </div>
+      <button class="btn-ghost btn-sm mt-2" id="add-service-row">+ Anadir servicio</button>
+
+      <div class="form-row mt-4">
+        <div class="form-group">
+          <label>Complejidad</label>
+          <select id="q-complexity">
+            <option value="1">Baja (x1.0)</option>
+            <option value="1.3" selected>Media (x1.3)</option>
+            <option value="1.6">Alta (x1.6)</option>
+            <option value="2">Muy alta (x2.0)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Descuento (%)</label>
+          <input type="number" id="q-discount" value="0" min="0" max="30" />
+        </div>
+        <div class="form-group">
+          <label>Terminos de pago</label>
+          <select id="q-terms">
+            <option>50% adelanto + 50% entrega</option>
+            <option>30% adelanto + 70% entrega</option>
+            <option>100% al finalizar</option>
+            <option>Mensual</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Quote summary -->
+      <div class="quote-summary" id="quote-summary">
+        <div class="quote-row"><span>Subtotal</span><span id="q-subtotal">0,00 EUR</span></div>
+        <div class="quote-row"><span id="q-disc-label">Descuento (0%)</span><span id="q-disc-amount">- 0,00 EUR</span></div>
+        <div class="quote-row"><span>IVA (21%)</span><span id="q-iva">0,00 EUR</span></div>
+        <div class="quote-row quote-row--total"><span>TOTAL</span><span id="q-total">0,00 EUR</span></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-ghost" data-modal="modal-quote">Cancelar</button>
+      <button class="btn-secondary" id="preview-quote-btn">Vista previa</button>
+      <button class="btn-primary" id="save-quote-btn">Guardar presupuesto</button>
+    </div>
+  </div>
+</div>
+
+<!-- Client Detail Modal -->
+<div id="modal-client" class="modal-overlay hidden">
+  <div class="modal modal--large">
+    <div class="modal-header">
+      <h3 id="modal-client-title">Detalle cliente</h3>
+      <button class="modal-close" data-modal="modal-client">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body" id="modal-client-body"><!-- JS --></div>
+  </div>
+</div>
+
+<!-- Cold Call Modal -->
+<div id="modal-coldcall" class="modal-overlay hidden">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>Script Cold Call</h3>
+      <button class="modal-close" data-modal="modal-coldcall">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body" id="modal-coldcall-body"><!-- JS --></div>
+    <div class="modal-footer">
+      <button class="btn-ghost" data-modal="modal-coldcall">Cerrar</button>
+      <button class="btn-primary" id="copy-script-btn">Copiar script</button>
+    </div>
+  </div>
+</div>
+
+<!-- Quote Preview -->
+<div id="modal-quote-preview" class="modal-overlay hidden">
+  <div class="modal modal--xlarge">
+    <div class="modal-header">
+      <h3>Vista previa del presupuesto</h3>
+      <button class="modal-close" data-modal="modal-quote-preview">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body" id="quote-preview-body"></div>
+    <div class="modal-footer">
+      <button class="btn-ghost" data-modal="modal-quote-preview">Cerrar</button>
+      <button class="btn-ghost" id="send-quote-email-btn">Enviar por email</button>
+      <button class="btn-primary" id="download-quote-pdf-btn">Descargar PDF</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── Modal: Prompt Detail ── -->
+<div id="modal-prompt-detail" class="modal-overlay hidden">
+  <div class="modal modal--xlarge">
+    <div class="modal-header">
+      <div>
+        <div class="modal-prompt-cat" id="prompt-detail-cat" style="font-size:.65rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);font-family:var(--mono);margin-bottom:.25rem"></div>
+        <h3 id="prompt-detail-title">Titulo del prompt</h3>
+      </div>
+      <button class="modal-close" data-modal="modal-prompt-detail">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body" id="prompt-detail-body"></div>
+  </div>
+</div>
+
+<!-- ── Modal: Course Detail ── -->
+<div id="modal-course-detail" class="modal-overlay hidden">
+  <div class="modal modal--xlarge">
+    <div class="modal-header">
+      <div>
+        <div id="course-detail-badge" style="font-size:.6rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;font-family:var(--mono);margin-bottom:.25rem"></div>
+        <h3 id="course-detail-title">Titulo del curso</h3>
+      </div>
+      <button class="modal-close" data-modal="modal-course-detail">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body" id="course-detail-body"></div>
+  </div>
+</div>
+
+<!-- ── Modal: Register P&L ── -->
+<div id="modal-pl-register" class="modal-overlay hidden">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>Registrar entrada financiera</h3>
+      <button class="modal-close" data-modal="modal-pl-register">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label>Tipo</label>
+        <div class="btn-group" style="width:100%">
+          <button class="btn-ghost pl-type-btn active" data-type="income" style="flex:1;justify-content:center">Ingreso</button>
+          <button class="btn-ghost pl-type-btn" data-type="expense" style="flex:1;justify-content:center">Gasto</button>
+        </div>
+        <input type="hidden" id="pl-type" value="income" />
+      </div>
+      <div class="form-group">
+        <label>Descripcion</label>
+        <input type="text" id="pl-desc" placeholder="Ej: Proyecto chatbot - Cliente X" />
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Importe (EUR)</label>
+          <input type="number" id="pl-amount" placeholder="0.00" min="0" step="0.01" />
+        </div>
+        <div class="form-group">
+          <label>Mes</label>
+          <input type="month" id="pl-month" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Categoria</label>
+        <select id="pl-category">
+          <optgroup label="Ingresos">
+            <option value="proyecto">Proyecto finalizado</option>
+            <option value="recurrente">Servicio recurrente</option>
+            <option value="consultoria">Consultoria</option>
+            <option value="otro-ingreso">Otro ingreso</option>
+          </optgroup>
+          <optgroup label="Gastos">
+            <option value="salarios">Salarios / Colaboradores</option>
+            <option value="herramientas">Herramientas y software</option>
+            <option value="marketing">Marketing y publicidad</option>
+            <option value="infraestructura">Hosting e infraestructura</option>
+            <option value="otro-gasto">Otro gasto</option>
+          </optgroup>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Notas (opcional)</label>
+        <textarea id="pl-notes" rows="2" placeholder="Informacion adicional..."></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-ghost" data-modal="modal-pl-register">Cancelar</button>
+      <button class="btn-primary" id="save-pl-entry-btn">Guardar entrada</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── Modal: Invoice View ── -->
+<div id="modal-invoice-view" class="modal-overlay hidden">
+  <div class="modal modal--xlarge">
+    <div class="modal-header">
+      <h3 id="invoice-view-title">Factura</h3>
+      <button class="modal-close" data-modal="modal-invoice-view">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body" id="invoice-view-body"></div>
+    <div class="modal-footer">
+      <button class="btn-ghost btn-sm" id="delete-invoice-btn" style="color:var(--error);border-color:var(--error)">Eliminar factura</button>
+      <button class="btn-ghost" data-modal="modal-invoice-view">Cerrar</button>
+      <button class="btn-primary" id="download-invoice-pdf-btn">Descargar PDF</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── Modal: Case Study ── -->
+<div id="modal-case-study" class="modal-overlay hidden">
+  <div class="modal modal--large">
+    <div class="modal-header">
+      <h3 id="cs-modal-title">Nuevo Case Study</h3>
+      <button class="modal-close" data-modal="modal-case-study">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="cs-edit-id" />
+      <div class="form-row">
+        <div class="form-group">
+          <label>Nombre del proyecto <span style="color:var(--accent)">*</span></label>
+          <input type="text" id="cs-title" placeholder="Ej: Chatbot IA para Clinica Salud+" />
+        </div>
+        <div class="form-group">
+          <label>Cliente</label>
+          <input type="text" id="cs-client" placeholder="Nombre del cliente" />
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Sector</label>
+          <select id="cs-sector">
+            <option value="">Seleccionar...</option>
+            <option>Salud / Clinicas</option>
+            <option>E-commerce</option>
+            <option>SaaS / Tech</option>
+            <option>Restauracion</option>
+            <option>Legal</option>
+            <option>Educacion</option>
+            <option>Inmobiliaria</option>
+            <option>Consultoria</option>
+            <option>Otro</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Servicio principal</label>
+          <select id="cs-service">
+            <option value="">Seleccionar...</option>
+            <option>Chatbot con IA</option>
+            <option>Desarrollo Web</option>
+            <option>Automatizacion</option>
+            <option>Analisis de Datos</option>
+            <option>Agente IA</option>
+            <option>App completa</option>
+            <option>SEO con IA</option>
+            <option>Otro</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Descripcion del proyecto</label>
+        <textarea id="cs-desc" rows="3" placeholder="Que problema tenia el cliente y que construiste para resolverlo..."></textarea>
+      </div>
+      <div class="form-group">
+        <label>Resultado / Metrica clave <span style="font-size:.7rem;color:var(--text-mute)">(lo mas importante para el portfolio)</span></label>
+        <input type="text" id="cs-result" placeholder="Ej: Reduccion del 60% en consultas manuales · 3x mas leads · Ahorro de 40h/mes" />
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Tecnologias usadas</label>
+          <input type="text" id="cs-tech" placeholder="Claude API, n8n, React, Supabase..." />
+        </div>
+        <div class="form-group">
+          <label>Valor del proyecto (EUR)</label>
+          <input type="number" id="cs-value" placeholder="0" min="0" />
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Duracion del proyecto</label>
+          <input type="text" id="cs-duration" placeholder="Ej: 3 semanas" />
+        </div>
+        <div class="form-group">
+          <label>Link / URL del proyecto (opcional)</label>
+          <input type="url" id="cs-link" placeholder="https://..." />
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Testimonial del cliente (opcional)</label>
+        <textarea id="cs-testimonial" rows="2" placeholder='"El chatbot redujo nuestras llamadas a la mitad desde el primer mes." — Maria G., directora'></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-ghost btn-sm" id="delete-cs-btn" style="color:var(--error);border-color:var(--error);display:none">Eliminar</button>
+      <button class="btn-ghost" data-modal="modal-case-study">Cancelar</button>
+      <button class="btn-primary" id="save-cs-btn">Guardar case study</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── Modal: Case Study Detail View ── -->
+<div id="modal-cs-detail" class="modal-overlay hidden">
+  <div class="modal modal--xlarge">
+    <div class="modal-header">
+      <div>
+        <div id="cs-detail-service" style="font-size:.65rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);font-family:var(--mono);margin-bottom:.25rem"></div>
+        <h3 id="cs-detail-title"></h3>
+      </div>
+      <button class="modal-close" data-modal="modal-cs-detail">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body" id="cs-detail-body"></div>
+    <div class="modal-footer">
+      <button class="btn-ghost btn-sm" id="cs-detail-delete" style="color:var(--error);border-color:var(--error)">Eliminar</button>
+      <button class="btn-ghost" data-modal="modal-cs-detail">Cerrar</button>
+      <button class="btn-primary" id="cs-detail-edit">Editar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── Modal: New / Edit Task ── -->
+<div id="modal-task" class="modal-overlay hidden">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 id="task-modal-title">Nueva Tarea</h3>
+      <button class="modal-close" data-modal="modal-task">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="task-edit-id" value="" />
+      <div class="form-group">
+        <label>Titulo de la tarea <span style="color:var(--accent)">*</span></label>
+        <input type="text" id="task-title" placeholder="Ej: Enviar propuesta a Cliente X" />
+      </div>
+      <div class="form-group">
+        <label>Descripcion (opcional)</label>
+        <textarea id="task-desc" rows="2" placeholder="Detalles adicionales..."></textarea>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Prioridad</label>
+          <select id="task-priority">
+            <option value="alta">🔴 Alta</option>
+            <option value="media" selected>🟡 Media</option>
+            <option value="baja">🟢 Baja</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Estado</label>
+          <select id="task-status">
+            <option value="pendiente" selected>Pendiente</option>
+            <option value="en-proceso">En proceso</option>
+            <option value="revision">En revision</option>
+            <option value="completada">Completada</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Fecha limite</label>
+          <input type="date" id="task-due" />
+        </div>
+        <div class="form-group">
+          <label>Proyecto / etiqueta</label>
+          <input type="text" id="task-project" placeholder="CRM, cliente X, marketing..." />
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-ghost btn-sm" id="delete-task-btn" style="color:var(--error);border-color:var(--error);display:none">Eliminar</button>
+      <button class="btn-ghost" data-modal="modal-task">Cancelar</button>
+      <button class="btn-primary" id="save-task-btn">Guardar tarea</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── Edit Mode floating UI ── -->
+<div id="edit-mode-bar" class="edit-mode-bar hidden">
+  <span class="edit-mode-label">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+    Modo edicion activo — haz clic en cualquier texto para editarlo
+  </span>
+  <button class="btn-primary btn-sm" id="save-edits-btn">Guardar cambios</button>
+  <button class="btn-ghost btn-sm" id="cancel-edits-btn">Cancelar</button>
+</div>
+<button id="edit-mode-toggle" class="edit-mode-toggle" title="Activar modo edicion">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+  <span>Editar</span>
+</button>
+
+<!-- Toast notifications -->
+<div id="toast-container" class="toast-container" role="alert" aria-live="polite"></div>
+
+<!-- Print area (hidden, used for PDF) -->
+<div id="print-area" class="print-only"></div>
+
+<!-- Scripts -->
+<script defer src="lib/gsap.min.js"></script>
+<script defer src="lib/ScrollTrigger.min.js"></script>
+<script defer src="lib/html2canvas.min.js"></script>
+<script defer src="lib/jspdf.umd.min.js"></script>
+<script defer src="lib/manifest.js"></script>
+<script defer src="main.js?v=20260608"></script>
+</body>
+</html>
